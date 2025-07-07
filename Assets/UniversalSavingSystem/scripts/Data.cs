@@ -4,38 +4,25 @@ using UnityEditor;
 using UnityEngine;
 
 [System.Serializable]
-public class Data : MonoBehaviour
+public class Data
 {
-    Vector _pos;
-    Vector _rot;
-    Vector _scale;
+    public readonly Vector _pos;
+    public readonly Vector _rot;
+    public readonly Vector _scale;
 
-    string _prefabPath;
+    public readonly string _prefabPath;
 
-    public string objectName;
+    public readonly string objectName;
 
-    bool isRespawnable;
+    public readonly bool isRespawnable;
 
-    public void MakeIsRespawnable()
+    public Data(Vector _pos, Vector _rot, Vector _scale, string _prefabPath, string objectName, bool isRespawnable)
     {
-        isRespawnable = true;
-    }
-
-    public void GatherData()
-    {
-        _pos = GenerateNewVector(transform.position.x, transform.position.y, transform.position.z);
-
-        _rot = GenerateNewVector(transform.rotation.x, transform.rotation.y, transform.rotation.z);
-        
-        _scale = GenerateNewVector(transform.localScale.x, transform.localScale.y, transform.localScale.z);
-
-        if(isRespawnable) _prefabPath = AssetDatabase.GetAssetPath(PrefabUtility.GetCorrespondingObjectFromOriginalSource(this.gameObject));
-    
-        objectName = this.gameObject.name;
-    }
-
-    Vector GenerateNewVector(float x, float y, float z)
-    {
-        return new Vector(x, y, z);
+        this._pos = _pos;
+        this._rot = _rot;
+        this._scale = _scale;
+        this._prefabPath = _prefabPath;
+        this.objectName = objectName;
+        this.isRespawnable = isRespawnable;
     }
 }

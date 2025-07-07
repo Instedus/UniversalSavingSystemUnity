@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 [System.Serializable]
 public class SaveableFile
 {
-    public readonly Data[] datas;
+    public readonly List<Data> datas = new List<Data>();
 
-    public SaveableFile(Data[] data)
+    public SaveableFile(GatherableData[] data)
     {
-        this.datas = data;
+        data.ToList().ForEach(x =>
+        {
+            datas.Add(x.data);
+        });
     }
 }

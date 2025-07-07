@@ -8,17 +8,21 @@ using System.IO;
 public class BinarySaving : ISaveable
 {
 	public void Save(string path, object obj){
-		try{
-			using(FileStream stream = new FileStream(path, FileMode.OpenOrCreate)){	
+		try
+		{
+			using (FileStream stream = new FileStream(path, FileMode.OpenOrCreate)){	
 				BinaryFormatter formatter = new BinaryFormatter();
 				
 				formatter.Serialize(stream, obj);
-				
+
+				Debug.Log(path);
+
 				Debug.Log("saved succesfuly");
 			}
 		}
-		catch{
-			Debug.LogError("error on saving");		
+		catch
+		{
+			Debug.LogError("error on saving");
 		}
 	}
 	

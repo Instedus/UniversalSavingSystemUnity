@@ -13,4 +13,9 @@ public class Vector
         this.y = y; 
         this.z = z;
     }
+
+    public static Vector GenerateNewVector(float x, float y, float z)
+    {
+        return new Vector(x, y, z);
+    }
 }

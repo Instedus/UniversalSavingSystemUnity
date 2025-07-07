@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -8,17 +9,20 @@ using UnityEngine.SceneManagement;
 
 public class SavingSystem : MonoBehaviour
 {
-	List<List<Data>> datas = new List<List<Data>>();
+	List<List<GatherableData>> datas = new List<List<GatherableData>>();
 
 	List<string> sceneNames = new List<string>();
+
+	public static SavingSystem Instance;
 	
 	void Awake(){
 		DontDestroyOnLoad(this.gameObject);
+		Instance = this;
 	}
 	
 	void FindDatas(){
 
-		Data[] newdatas = GameObject.FindObjectsOfType<Data>();
+        GatherableData[] newdatas = GameObject.FindObjectsOfType<GatherableData>();
 
 		newdatas.ToList().ForEach(x =>
 		{
@@ -55,7 +59,7 @@ public class SavingSystem : MonoBehaviour
 
 	string CombineSavePath(string sceneName)
 	{
-		return Path.Combine(Application.persistentDataPath, sceneName,".dat");
+		return Path.Combine(Application.persistentDataPath, sceneName + ".dat");
 	}
 
 	public void Save()
@@ -64,9 +68,38 @@ public class SavingSystem : MonoBehaviour
 		CreateNewSave();
 	}
 
+	public void Load()
+	{
+		int index = 0;
+
+		SaveableFile file = null;
+
+        datas.ForEach(data =>
+        {
+            using (BinarySaving saver = new())
+            {
+				 file = saver.Load<SaveableFile>(CombineSavePath(sceneNames[index]));
+
+                index++;
+            }
+        });
+
+		file.datas.ForEach(x =>
+		{
+			Debug.Log(x._prefabPath);
+			Debug.Log(x.objectName);
+
+			Debug.Log(x._pos.x);
+			Debug.Log(x._pos.y);
+			Debug.Log(x._pos.z);
+		});
+    }
+
 	public void AddScene()
 	{
 		sceneNames.Add(SceneManager.GetActiveScene().name);
+
+		datas.Add(new List<GatherableData>());
 
 		FindDatas();
 	}
