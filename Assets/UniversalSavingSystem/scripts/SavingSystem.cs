@@ -78,7 +78,7 @@ public class SavingSystem : MonoBehaviour
         {
             using (BinarySaving saver = new())
             {
-				 file = saver.Load<SaveableFile>(CombineSavePath(sceneNames[index]));
+				file = saver.Load<SaveableFile>(CombineSavePath(sceneNames[index]));
 
                 index++;
             }

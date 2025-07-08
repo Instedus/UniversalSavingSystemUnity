@@ -16,10 +16,21 @@ public class RandomSpawner : MonoBehaviour
         }
     }
 
-    private void Start()
+
+    bool isFlag;
+    float timer;
+    private void Update()
     {
-        SavingSystem.Instance.AddScene();
-        SavingSystem.Instance.Save();
-        SavingSystem.Instance.Load();
+        timer += Time.deltaTime;
+
+        if (!isFlag && timer > 3f)
+        {
+            SavingSystem.Instance.AddScene();
+            SavingSystem.Instance.Save();
+            SavingSystem.Instance.Load();
+
+            isFlag = true;
+        }
     }
+
 }
