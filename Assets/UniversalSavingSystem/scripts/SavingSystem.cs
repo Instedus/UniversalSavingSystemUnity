@@ -9,6 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class SavingSystem : MonoBehaviour
 {
+	public event Action OnSave;
+
+	public event Action OnLoad;
+
 	List<List<GatherableData>> datas = new List<List<GatherableData>>();
 
 	List<string> sceneNames = new List<string>();
@@ -65,7 +69,10 @@ public class SavingSystem : MonoBehaviour
 	public void Save()
 	{
 		GatherDataFromObjects();
+
 		CreateNewSave();
+
+		OnSave?.Invoke();
 	}
 
 	public void Load()
@@ -93,6 +100,8 @@ public class SavingSystem : MonoBehaviour
 			Debug.Log(x._pos.y);
 			Debug.Log(x._pos.z);
 		});
+
+		OnLoad?.Invoke();
     }
 
 	public void AddScene()
