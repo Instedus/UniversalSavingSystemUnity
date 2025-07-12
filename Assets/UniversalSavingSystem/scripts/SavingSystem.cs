@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Runtime.Serialization.Formatters.Binary;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -75,7 +76,7 @@ public class SavingSystem : MonoBehaviour
 		OnSave?.Invoke();
 	}
 
-	public void Load()
+	public void TestLoad()
 	{
 		int index = 0;
 
@@ -103,6 +104,20 @@ public class SavingSystem : MonoBehaviour
 
 		OnLoad?.Invoke();
     }
+
+	public void Load()
+	{
+		int index = sceneNames.Where(x => 
+			x.Equals(SceneManager.GetActiveScene().name))
+			.ConvertTo<int>();
+
+		SaveableFile save = null;
+
+		using (BinarySaving saver = new BinarySaving())
+		{
+			save = saver.Load<SaveableFile>(CombineSavePath(sceneNames[index]));
+		}
+	}
 
 	public void AddScene()
 	{
