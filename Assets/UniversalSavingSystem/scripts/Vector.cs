@@ -18,4 +18,9 @@ public class Vector
     {
         return new Vector(x, y, z);
     }
+
+    public Vector3 GenerateNewVector3()
+    {
+        return new Vector3(x, y, z);
+    }
 }

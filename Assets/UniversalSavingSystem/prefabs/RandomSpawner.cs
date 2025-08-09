@@ -27,7 +27,7 @@ public class RandomSpawner : MonoBehaviour
         {
             SavingSystem.Instance.AddScene();
             SavingSystem.Instance.Save();
-            SavingSystem.Instance.Load();
+            //SavingSystem.Instance.Load();
 
             isFlag = true;
         }

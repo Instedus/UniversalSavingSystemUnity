@@ -8,11 +8,14 @@ public class SaveableFile
 {
     public readonly List<Data> datas = new List<Data>();
 
-    public SaveableFile(GatherableData[] data)
+    public readonly string sceneName;
+    public SaveableFile(GatherableData[] data, string sceneName)
     {
         data.ToList().ForEach(x =>
         {
             datas.Add(x.data);
         });
+
+        this.sceneName = sceneName;
     }
 }

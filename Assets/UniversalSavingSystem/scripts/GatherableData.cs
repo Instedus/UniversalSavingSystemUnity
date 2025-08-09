@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 
 public class GatherableData : MonoBehaviour
 {
+    [SerializeField] AssetReference _ref;
+
     Vector _pos;
     Vector _rot;
     Vector _scale;
@@ -43,10 +46,10 @@ public class GatherableData : MonoBehaviour
 
     void GeneratePrefabPath()
     {
-        if (!_prefabPath.Equals(string.Empty)) return;
+        //if (!_prefabPath.Equals(string.Empty)) return;
 
-        string[] parts = this.name.Split(new string[] { "(Clone)" }, System.StringSplitOptions.None);
+        //string[] parts = this.name.Split(new string[] { "(Clone)" }, System.StringSplitOptions.None);
 
-        _prefabPath = parts[0];
+        //_prefabPath = parts[0];
     }
 }

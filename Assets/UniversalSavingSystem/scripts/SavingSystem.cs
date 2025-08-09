@@ -53,7 +53,7 @@ public class SavingSystem : MonoBehaviour
 		{
 			using (BinarySaving saver = new ())
 			{
-				SaveableFile file = new (data.ToArray());
+				SaveableFile file = new (data.ToArray(), sceneNames[index]);
 
 				saver.Save(CombineSavePath(sceneNames[index]), file);
 
@@ -117,7 +117,35 @@ public class SavingSystem : MonoBehaviour
 		{
 			save = saver.Load<SaveableFile>(CombineSavePath(sceneNames[index]));
 		}
+
+		save.datas.ForEach(x =>
+		{
+			GameObject go;
+
+			if (x.isRespawnable)
+			{
+				go = (GameObject)Resources.Load(x._prefabPath);
+
+				Instantiate(go);
+			}
+
+			else
+			{
+				go = GameObject.Find(x.objectName);
+			}
+
+            LoadGameObject(go, x);
+        });
 	}
+
+	public void LoadGameObject(GameObject go, Data x)
+	{
+		go.transform.position = x._pos.GenerateNewVector3();
+
+        go.transform.rotation = Quaternion.Euler(x._rot.GenerateNewVector3());
+
+		go.transform.localScale = x._scale.GenerateNewVector3();
+    }
 
 	public void AddScene()
 	{
